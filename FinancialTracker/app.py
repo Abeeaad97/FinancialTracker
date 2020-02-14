@@ -18,7 +18,7 @@ class Scraper():
         shutil.rmtree(DATA_DIR, ignore_errors=True)
 
 
-# Runs script to create environment
+# Runs bash script to create environment
 def job(app):
     app.scrape_all()
 
