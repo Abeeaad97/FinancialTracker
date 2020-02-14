@@ -2,6 +2,7 @@ import shutil
 import schedule
 import time
 import subprocess
+import sys
 
 # Where data will be stored or removed
 DATA_DIR = "../data/"
@@ -11,7 +12,7 @@ class Scraper():
         pass
 
     def scrape_all(self):
-        pass
+        subprocess.call([sys.executable, "../job.sh"])
 
     # Remove data file using shutil module
     def clean_all(self):

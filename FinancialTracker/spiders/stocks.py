@@ -1,9 +1,9 @@
 import scrapy
 import json
 import loguru
+import items
 from datetime import date
 from lxml import etree
-from FinancialTracker import items
 
 # Spider to scrap Miscroft's historical data
 class MSFT_Spider(scrapy.Spider):
