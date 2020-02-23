@@ -1,36 +1,40 @@
-import requests from bs4
-import BeautifulSoup
+import requests
+from bs4 import BeautifulSoup
 import csv
 import pandas as pd
 
+# Data Table
 names=[]
 prices=[]
 changes=[]
-precentChangess=[]
+percentChanges=[]
 marketCaps=[]
 totalVolumes=[]
 circulatingSupplys=[]
 
-for index in range(0,10):
-    CryptoCurrencies = "https://in.finance.yahoo.com/cryptocurrencies?offset="
-    + str(index) + "&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;count=50"
+# URL to scrape data from
+CryptoCurrenciesUrl = "https://finance.yahoo.com/currencies"
 
-    r = requests.get(CryptoCurrencies)
-    data = r.text
-    soup = BeautifulSoup(data)
+# Send a GET request to retrieve html
+r = requests.get(CryptoCurrenciesUrl)
+data = r.text
 
-    for listing in soup.find_all('tr', attrs={'class':'SimpleDataTableRow'}):
-        for name in listing.find_all('td', attrs={'aria-label': 'Name'}):
+# Load the data into soup
+soup = BeautifulSoup(data, 'lxml')
+
+# For Loop - Yahoo Finance requires us to crawl through data-id attributes
+# the range was determined by their specific pattern of id increments
+for index in range(40, 404, 14):
+    # For Loop - grab each listing row and extract the data individually
+    for listing in soup.find_all('tr', attrs={'data-reactid':index}):
+        for name in listing.find_all('td', attrs={'data-reactid':index+3}):
             names.append(name.text)
-        for price in listing.find_all('td', attrs={'aria-label': 'Price (intraday)'}):
-            prices.append(price.find('span').text)
-        for change in listing.find_all('td', attrs={'aria-label': 'Change'}):
+        for price in listing.find_all('td', attrs={'data-reactid':index+4}):
+            prices.append(price.text)
+        for change in listing.find_all('td', attrs={'data-reactid':index+5}):
             changes.append(change.text)
-        for percentChange in listing.find_all('td', attrs={'aria-label': '% Change'}):
+        for percentChange in listing.find_all('td', attrs={'data-reactid':index+7}):
             percentChanges.append(percentChange.text)
-        for marketCap in listing.find_all('td', attrs={'aria-label': 'Market Cap'}):
-            marketCaps.append(marketCap.text)
-        for totalVolume in listing.find_all('td', attrs={'aria-label': 'Total Volume (24 hrs)'}):
-            totalVolumes.append(totalVolume.text)
-        for circulatingSupply in listing.find_all('td', attrs={'aria-label': 'Circulating Supply'}):
-            circulatingSupplys.append(circulatingSupply.text)
+
+# Create a dataframe with the pandas library to view results on Jupyter
+pd.DataFrame({"Names": names, "Prices": prices, "Change": changes, "% Change": percentChanges})
