@@ -1,42 +1,44 @@
 {
-  "name": "financialtracker",
-  "version": "0.1.0",
+  "name": "FinancialTracker",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --open",
+    "dev": "npm run serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.6.4",
-    "vue": "^2.6.11",
-    "vue-router": "^3.1.5"
+    "bfj": "^7.0.2",
+    "bfj-node4": "^5.3.1",
+    "chartist": "0.11.0",
+    "circular-json": "^0.5.9",
+    "node-sass": "^4.13.1",
+    "request": "^2.88.2",
+    "sass-loader": "7.1.0",
+    "vue": "2.5.22",
+    "vue-chartist": "2.1.2",
+    "vue-meta": "1.5.2",
+    "vuetify": "1.4.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.2.0",
-    "@vue/cli-plugin-eslint": "~4.2.0",
-    "@vue/cli-service": "~4.2.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.1.2",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+    "@mdi/font": "2.5.94",
+    "@vue/cli": "^4.2.2",
+    "@vue/cli-plugin-babel": "3.0.1",
+    "@vue/cli-plugin-eslint": "3.0.1",
+    "@vue/cli-service": "3.0.1",
+    "@vue/cli-service-global": "^4.2.2",
+    "@vue/eslint-config-standard": "3.0.1",
+    "axios": "0.19.0",
+    "core-js": "^2.6.11",
+    "material-design-icons-iconfont": "3.0.3",
+    "stylus": "0.54.5",
+    "stylus-loader": "3.0.1",
+    "vue-analytics": "5.8.0",
+    "vue-i18n": "7.4.0",
+    "vue-router": "3.0.1",
+    "vue-template-compiler": "2.5.22",
+    "vuex": "3.0.1",
+    "vuex-router-sync": "5.0.0"
+  }
 }
