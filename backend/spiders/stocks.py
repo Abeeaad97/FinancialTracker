@@ -1,39 +1,36 @@
-import scrapy
-import json
-import loguru
-import items
-from datetime import date
-from lxml import etree
+import requests from bs4
+import BeautifulSoup
+import csv
+import pandas as pd
 
-# Spider to scrap Miscroft's historical data
-class MSFT_Spider(scrapy.Spider):
-    name = 'stocks'
-    allowed_domains = ["www.nasdaq.com"]
+names=[]
+prices=[]
+changes=[]
+precentChangess=[]
+marketCaps=[]
+totalVolumes=[]
+circulatingSupplys=[]
 
-    # The url we are scraping
-    start_url = {
-        "https://www.nasdaq.com/market-activity/stocks/msft/historical"
-    }
+for index in range(0,10):
+    CryptoCurrencies = "https://in.finance.yahoo.com/cryptocurrencies?offset="
+    + str(index) + "&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;count=50"
 
-    # Parse the JSON data into the data model
-    def parse(self, response):
-        data_model = HistoricalData()
+    r = requests.get(CryptoCurrencies)
+    data = r.text
+    soup = BeautifulSoup(data)
 
-        for index in json.loads(response.body):
-            # Process the webpage using etree
-            data = etree.HTML(i)
-
-            # Locate data table
-            hist_xpath = ".//tbody[@class=historical-data__table-body]"
-            data_list = data.xpath(hist_xpath)
-
-            for i in data_list:
-                # Load the data model
-                data_model["DATE"] = i.xpath("./th[1]/text()")[0]
-                data_model["CLOSE"] = i.xpath("./td[1]/text()")[0][1:]
-                data_model["VOLUME"] = i.xpath("./td[2]/text()")[0]
-                data_model["OPEN"] = i.xpath("./td[3]/text()")[0][1:]
-                data_model["HIGH"] = i.xpath("./td[4]/text()")[0][1:]
-                data_model["LOW"] = i.xpath("./td[5]/text()")[0][1:]
-
-                yield data_model
+    for listing in soup.find_all('tr', attrs={'class':'SimpleDataTableRow'}):
+        for name in listing.find_all('td', attrs={'aria-label': 'Name'}):
+            names.append(name.text)
+        for price in listing.find_all('td', attrs={'aria-label': 'Price (intraday)'}):
+            prices.append(price.find('span').text)
+        for change in listing.find_all('td', attrs={'aria-label': 'Change'}):
+            changes.append(change.text)
+        for percentChange in listing.find_all('td', attrs={'aria-label': '% Change'}):
+            percentChanges.append(percentChange.text)
+        for marketCap in listing.find_all('td', attrs={'aria-label': 'Market Cap'}):
+            marketCaps.append(marketCap.text)
+        for totalVolume in listing.find_all('td', attrs={'aria-label': 'Total Volume (24 hrs)'}):
+            totalVolumes.append(totalVolume.text)
+        for circulatingSupply in listing.find_all('td', attrs={'aria-label': 'Circulating Supply'}):
+            circulatingSupplys.append(circulatingSupply.text)
