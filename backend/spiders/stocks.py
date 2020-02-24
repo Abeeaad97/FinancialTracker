@@ -37,4 +37,7 @@ for index in range(40, 404, 14):
             percentChanges.append(percentChange.text)
 
 # Create a dataframe with the pandas library to view results on Jupyter
-pd.DataFrame({"Names": names, "Prices": prices, "Change": changes, "% Change": percentChanges})
+df = pd.DataFrame({"Names": names, "Prices": prices, "Change": changes, "% Change": percentChanges})
+
+# Export results to data.csv (Excel file)
+df.to_csv(r'C:\Users\tyler\Documents\FinancialTracker\data.csv')
