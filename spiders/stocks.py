@@ -33,17 +33,7 @@ tChange = test.find('td', attrs={'data-reactid':45})
 tPChange = test.find('td', attrs={'data-reactid':47})
 
 test = tPrice.text.replace(',', '')
-print(str(tName.text))
-print(float(test))
 
-params={
-    "ticker":tName.text,
-    "price":float(tPrice.text.replace(',', '')),
-    "change":float(tChange.text.replace(',', '')),
-    "percentChange":float(tPChange.text.replace(',', '').replace('%',''))
-    }
-
-r = requests.post(url=API_ENDPOINT, data=params)
 
 # For Loop - Yahoo Finance requires us to crawl through data-id attributes
 # the range was determined by their specific pattern of id increments
@@ -53,11 +43,20 @@ for index in range(40, 404, 14):
         for name in listing.find_all('td', attrs={'data-reactid':index+3}):
             names.append(name.text)
         for price in listing.find_all('td', attrs={'data-reactid':index+4}):
-            prices.append(price.text)
+            prices.append(float(price.text.replace(',', '')))
         for change in listing.find_all('td', attrs={'data-reactid':index+5}):
-            changes.append(change.text)
+            changes.append(float(change.text.replace(',', '')))
         for percentChange in listing.find_all('td', attrs={'data-reactid':index+7}):
-            percentChanges.append(percentChange.text)
+            percentChanges.append(float(percentChange.text.replace(',', '').replace('%', '')))
+
+data = {
+    "ticker": names,
+    "price": prices,
+    "change": changes,
+    "percentChange": percentChanges
+}
+
+requests.post(url=API_ENDPOINT, data={"ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
 
 # Create a dataframe with the pandas library to view results on Jupyter
 pd.DataFrame({"Names": names, "Prices": prices, "Change": changes, "% Change": percentChanges})

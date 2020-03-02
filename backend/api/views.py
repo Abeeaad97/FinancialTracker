@@ -14,9 +14,21 @@ class StockList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = StockSerializer(data=request.data, many=False)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        for index in range(0,26):
+            ticker = request.data.getlist('ticker')
+            t = ticker[index]
+            price = request.data.getlist('price')
+            p = float(price[index])
+            change = request.data.getlist('change')
+            c = float(change[index])
+            percentChange = request.data.getlist('percentChange')
+            pc = float(percentChange[index])
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            stock = Stock.objects.create(ticker=t,price=p,change=c,percentChange=pc)
+            stock.save()
+
+            serializer = StockSerializer(data=stock, many=False)
+            if serializer.is_valid():
+                serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
