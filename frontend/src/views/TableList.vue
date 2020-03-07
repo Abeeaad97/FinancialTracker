@@ -37,7 +37,7 @@
               <td>{{ item.name }}</td>
               <td>{{ item.country }}</td>
               <td>{{ item.city }}</td>
-              <td class="text-xs-right">{{ item.salary }}</td>
+              <td class="text-xs-right"> {{ item.salary }} </td>
             </template>
           </v-data-table>
         </material-card>
@@ -73,7 +73,7 @@
               <td>{{ item.name }}</td>
               <td>{{ item.country }}</td>
               <td>{{ item.city }}</td>
-              <td class="text-xs-right">{{ item.salary }}</td>
+              <td class="text-xs-right"> {{ item.salary }} </td>
             </template>
           </v-data-table>
         </material-card>
@@ -82,6 +82,8 @@
   </v-container>
 </template>
 
+<script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 export default {
   data: () => ({
@@ -137,11 +139,11 @@ export default {
         salary: '$63,542'
       }, {
         name: 'Mason Porter',
-        country: 'Chile',
-        city: 'Gloucester',
-        salary: '$78,615'
-      }
-    ]
-  })
+          country: 'Chile',
+          city: 'Gloucester',
+          salary: '$78,615'
+        }
+      ],
+  }),
 }
 </script>

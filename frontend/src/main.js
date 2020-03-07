@@ -12,7 +12,6 @@
 
 // * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
@@ -34,7 +33,7 @@ sync(store, router)
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+/* eslint-disable */
 new Vue({
   router,
   store,

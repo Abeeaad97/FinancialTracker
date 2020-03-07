@@ -11,7 +11,7 @@ class StockList(APIView):
     def get(self, request):
         stocks = Stock.objects.all()
         serializer = StockSerializer(stocks, many=True)
-        return Response(serializer.data)
+        return Response("This is HTTP GET")
 
     def post(self, request):
         for index in range(0,26):
