@@ -21,7 +21,7 @@ export default [
   },
   {
     path: '/stock-list',
-    view: 'Typography'
+    view: 'StockList'
   },
   {
     path: '/indices-list',
