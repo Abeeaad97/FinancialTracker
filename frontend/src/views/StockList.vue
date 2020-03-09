@@ -13,8 +13,8 @@
       >
         <material-card
           color="green"
-          title="Simple Table"
-          text="Here is a subtitle for this table"
+          title="Currencies Table"
+          text="Stock exchange price of world currencies"
         >
           <v-data-table
             :headers="headers"
@@ -42,7 +42,7 @@
           </v-data-table>
         </material-card>
       </v-flex>
-      <v-flex
+<!--      <v-flex
         md12
       >
         <material-card
@@ -77,7 +77,7 @@
             </template>
           </v-data-table>
         </material-card>
-      </v-flex>
+      </v-flex> -->
     </v-layout>
   </v-container>
 </template>
