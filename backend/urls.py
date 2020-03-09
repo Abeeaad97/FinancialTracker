@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('currencies/', views.CurrencyList.as_view()),
     path('stocks/', views.StockList.as_view()),
+    path('indices/', views.IndiceList.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

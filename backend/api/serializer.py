@@ -11,3 +11,9 @@ class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
         fields = ('ticker', 'price', 'change', 'volume')
+
+
+class IndiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Indice
+        fields = ('ticker', 'price', 'change', 'percentChange')

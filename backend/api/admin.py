@@ -3,3 +3,4 @@ from .models import *
 
 admin.site.register(Currency)
 admin.site.register(Stock)
+admin.site.register(Indice)
