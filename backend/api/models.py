@@ -9,3 +9,13 @@ class Currency(models.Model):
 
     def __str__(self):
         return self.ticker
+
+
+class Stock(models.Model):
+    ticker = models.CharField(max_length=10)           # Name of the stock
+    price = models.FloatField()                         # Opening stock price
+    change = models.FloatField()                        # Closing stock price
+    volume = models.CharField(max_length=10)            # Amount of sales
+
+    def __str__(self):
+        return self.ticker

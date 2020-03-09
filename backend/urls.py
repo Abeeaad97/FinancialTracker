@@ -22,6 +22,7 @@ from api import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('currencies/', views.CurrencyList.as_view()),
+    path('stocks/', views.StockList.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

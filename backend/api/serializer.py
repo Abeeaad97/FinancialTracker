@@ -5,3 +5,9 @@ class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
         fields = ('ticker', 'price', 'change', 'percentChange')
+
+
+class StockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stock
+        fields = ('ticker', 'price', 'change', 'volume')
