@@ -15,20 +15,20 @@ export default [
     view: 'UserProfile'
   },
   {
-    path: '/stock-list',
-    name: 'Stock List',
-    view: 'StockList'
+    path: '/currency-list',
+    name: 'Currency List',
+    view: 'CurrencyList'
   },
   {
-    path: '/typography',
+    path: '/stock-list',
     view: 'Typography'
   },
   {
-    path: '/icons',
+    path: '/indices-list',
     view: 'Icons'
   },
   {
-    path: '/maps',
+    path: '/trend-analysis',
     view: 'Maps'
   },
   {

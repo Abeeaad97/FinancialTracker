@@ -3,14 +3,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
-from .serializer import StockSerializer
+from .serializer import *
 import json
 
 # List all the stocks in JSON format
-class StockList(APIView):
+class CurrencyList(APIView):
     def get(self, request):
-        stocks = Stock.objects.all()
-        serializer = StockSerializer(stocks, many=True)
+        currencies = Currency.objects.all()
+        serializer = CurrencySerializer(currencies, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -24,10 +24,10 @@ class StockList(APIView):
             percentChange = request.data.getlist('percentChange')
             pc = float(percentChange[index])
 
-            stock = Stock.objects.create(ticker=t,price=p,change=c,percentChange=pc)
-            stock.save()
+            currency = Currency.objects.create(ticker=t,price=p,change=c,percentChange=pc)
+            currency.save()
 
-            serializer = StockSerializer(data=stock, many=False)
+            serializer = CurrencySerializer(data=currency, many=False)
             if serializer.is_valid():
                 serializer.save()
 

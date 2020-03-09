@@ -1,7 +1,7 @@
 from django.db import models
 
 # Template Model
-class Stock(models.Model):
+class Currency(models.Model):
     ticker = models.CharField(max_length=10)           # Name of the stock
     price = models.FloatField()                         # Opening stock price
     change = models.FloatField()                        # Closing stock price

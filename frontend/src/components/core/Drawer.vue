@@ -81,24 +81,24 @@ export default {
         text: 'User Profile'
       },
       {
-        to: '/stock-list',
+        to: '/currency-list',
         icon: 'mdi-clipboard-outline',
+        text: 'Currency List'
+      },
+      {
+        to: '/stock-list',
+        icon: 'mdi-format-font',
         text: 'Stock List'
       },
       {
-        to: '/typography',
-        icon: 'mdi-format-font',
-        text: 'Typography'
-      },
-      {
-        to: '/icons',
+        to: '/indices-list',
         icon: 'mdi-chart-bubble',
-        text: 'Icons'
+        text: 'Indices List'
       },
       {
-        to: '/maps',
+        to: '/trend-analysis',
         icon: 'mdi-map-marker',
-        text: 'Maps'
+        text: 'Trend Analysis'
       },
       {
         to: '/notifications',

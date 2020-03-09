@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import *
 
-class StockSerializer(serializers.ModelSerializer):
+class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Stock
+        model = Currency
         fields = ('ticker', 'price', 'change', 'percentChange')
