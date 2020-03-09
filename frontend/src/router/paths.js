@@ -15,9 +15,9 @@ export default [
     view: 'UserProfile'
   },
   {
-    path: '/table-list',
-    name: 'Table List',
-    view: 'TableList'
+    path: '/stock-list',
+    name: 'Stock List',
+    view: 'StockList'
   },
   {
     path: '/typography',

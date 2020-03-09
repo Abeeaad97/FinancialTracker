@@ -93,9 +93,9 @@ export default {
         text: 'User Profile'
       },
       {
-        to: '/table-list',
+        to: '/stock-list',
         icon: 'mdi-clipboard-outline',
-        text: 'Table List'
+        text: 'Stock List'
       },
       {
         to: '/typography',
