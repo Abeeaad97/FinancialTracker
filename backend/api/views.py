@@ -66,11 +66,11 @@ class StockList(APIView):
 class IndiceList(APIView):
     def get(self, request):
         indices = Indice.objects.all()
-        serializer = IndiceSerializer(currencies, many=True)
+        serializer = IndiceSerializer(indices, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        for index in range(0,26):
+        for index in range(0,35):
             ticker = request.data.getlist('ticker')
             t = ticker[index]
             price = request.data.getlist('price')

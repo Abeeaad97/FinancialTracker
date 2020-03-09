@@ -21,11 +21,13 @@ export default [
   },
   {
     path: '/stock-list',
+    name: 'Stock List',
     view: 'StockList'
   },
   {
     path: '/indices-list',
-    view: 'Icons'
+    name: 'Indice List',
+    view: 'IndiceList'
   },
   {
     path: '/trend-analysis',
