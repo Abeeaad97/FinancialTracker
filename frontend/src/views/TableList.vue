@@ -34,10 +34,10 @@
               slot="items"
               slot-scope="{ item }"
             >
-              <td>{{ item.name }}</td>
-              <td>{{ item.country }}</td>
-              <td>{{ item.city }}</td>
-              <td class="text-xs-right"> {{ item.salary }} </td>
+              <td>{{ item.ticker }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.change }}</td>
+              <td class="text-xs-right"> {{ item.percentChange }} </td>
             </template>
           </v-data-table>
         </material-card>
@@ -70,10 +70,10 @@
               slot="items"
               slot-scope="{ item }"
             >
-              <td>{{ item.name }}</td>
-              <td>{{ item.country }}</td>
-              <td>{{ item.city }}</td>
-              <td class="text-xs-right"> {{ item.salary }} </td>
+              <td>{{ item.ticker }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.change }}</td>
+              <td class="text-xs-right"> {{ item.percentChange }} </td>
             </template>
           </v-data-table>
         </material-card>
@@ -85,65 +85,58 @@
 <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+import axios from 'axios'
+
 export default {
+  mounted: function () {
+    this.getStocks()
+    console.log('Mounted Got Here')
+  },
   data: () => ({
     headers: [
       {
         sortable: false,
-        text: 'Name',
-        value: 'name'
+        text: 'Ticker',
+        value: 'ticker'
       },
       {
         sortable: false,
-        text: 'Country',
-        value: 'country'
+        text: 'Price',
+        value: 'price'
       },
       {
         sortable: false,
-        text: 'City',
-        value: 'city'
+        text: 'Change',
+        value: 'change'
       },
       {
         sortable: false,
-        text: 'Salary',
-        value: 'salary',
+        text: 'Percent Change',
+        value: 'percentChange',
         align: 'right'
       }
     ],
-    items: [
-      {
-        name: 'Dakota Rice',
-        country: 'Niger',
-        city: 'Oud-Tunrhout',
-        salary: '$35,738'
-      },
-      {
-        name: 'Minerva Hooper',
-        country: 'Curaçao',
-        city: 'Sinaai-Waas',
-        salary: '$23,738'
-      }, {
-        name: 'Sage Rodriguez',
-        country: 'Netherlands',
-        city: 'Overland Park',
-        salary: '$56,142'
-      }, {
-        name: 'Philip Chanley',
-        country: 'Korea, South',
-        city: 'Gloucester',
-        salary: '$38,735'
-      }, {
-        name: 'Doris Greene',
-        country: 'Malawi',
-        city: 'Feldkirchen in Kārnten',
-        salary: '$63,542'
-      }, {
-        name: 'Mason Porter',
-          country: 'Chile',
-          city: 'Gloucester',
-          salary: '$78,615'
-        }
-      ],
+    items: [],
   }),
+  methods: {
+    getStocks: function () {
+    var self = this
+    const url = 'http://localhost:8000/stocks/'
+    axios.get(url, {
+      dataType: 'json',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      console.log(response.data)
+      self.items = response.data
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    }
+  }
 }
 </script>
