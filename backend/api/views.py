@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -41,8 +42,19 @@ class StockList(APIView):
         serializer = StockSerializer(stocks, many=True)
         return Response(serializer.data)
 
+    def put(self, request):
+        for index in range(0,366):
+            stock = get_object_or_404(Stock, id=index)
+            serializer = StockSerializer(data=stock, many=False)
+            if serializer.is_valid():
+                serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def post(self, request):
-        for index in range(0,100):
+        for index in range(0,366):
+            id = request.data.getlist('id')
+            i = id[index]
             ticker = request.data.getlist('ticker')
             t = ticker[index]
             price = request.data.getlist('price')
@@ -52,7 +64,7 @@ class StockList(APIView):
             volume = request.data.getlist('volume')
             v = volume[index]
 
-            stock = Stock.objects.create(ticker=t,price=p,change=c,volume=v)
+            stock = Stock.objects.create(id=i, ticker=t,price=p,change=c,volume=v)
             stock.save()
 
             serializer = StockSerializer(data=stock, many=False)

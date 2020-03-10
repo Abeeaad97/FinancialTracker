@@ -14,10 +14,19 @@ changes=[]
 percentChanges=[]
 
 # URL to scrape data from
-CurrenciesUrl = "https://finance.yahoo.com/currencies"
+CryptoUrl = "https://finance.yahoo.com/cryptocurrencies?offset=0&count=100"
+test = "https://www.nasdaq.com/market-activity/stocks/screener"
+
+r = requests.get(test)
+data = r.text
+t = BeautifulSoup(data, 'lxml')
+
+listing = t.find('div', attrs={'class': 'symbol-screener__content'})
+test = listing.find('div', attrs={'class': 'symbol-screener__results'})
+print(listing)
 
 # Send a GET request to retrieve html
-r = requests.get(CurrenciesUrl)
+r = requests.get(CryptoUrl)
 data = r.text
 
 # Load the data into soup
@@ -44,4 +53,4 @@ data = {
     "percentChange": percentChanges
 }
 
-requests.post(url=API_ENDPOINT, data={"ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
+#requests.post(url=API_ENDPOINT, data={"ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})

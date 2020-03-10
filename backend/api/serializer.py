@@ -10,7 +10,7 @@ class CurrencySerializer(serializers.ModelSerializer):
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
-        fields = ('ticker', 'price', 'change', 'volume')
+        fields = ('id', 'ticker', 'price', 'change', 'volume')
 
 
 class IndiceSerializer(serializers.ModelSerializer):
