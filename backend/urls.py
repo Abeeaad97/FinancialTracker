@@ -21,7 +21,7 @@ from api import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('currencies/', views.CurrencyList.as_view()),
+    path('crypto/', views.CryptoList.as_view()),
     path('stocks/', views.StockList.as_view()),
     path('indices/', views.IndiceList.as_view()),
 ]

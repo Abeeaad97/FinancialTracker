@@ -8,14 +8,25 @@ from .serializer import *
 import json
 
 # List all the currencies in JSON format
-class CurrencyList(APIView):
+class CryptoList(APIView):
     def get(self, request):
         currencies = Currency.objects.all()
         serializer = CurrencySerializer(currencies, many=True)
         return Response(serializer.data)
 
+    def put(self, request):
+        for index in range(0,111):
+            crypto = get_object_or_404(Crypto, id=index)
+            serializer = CryptoSerializer(data=crypto, many=False)
+            if serializer.is_valid():
+                serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def post(self, request):
-        for index in range(0,26):
+        for index in range(0,111):
+            id = request.data.getlist('id')
+            i = id[index]
             ticker = request.data.getlist('ticker')
             t = ticker[index]
             price = request.data.getlist('price')
@@ -25,10 +36,10 @@ class CurrencyList(APIView):
             percentChange = request.data.getlist('percentChange')
             pc = float(percentChange[index])
 
-            currency = Currency.objects.create(ticker=t,price=p,change=c,percentChange=pc)
-            currency.save()
+            crypto = Crypto.objects.create(id=i, ticker=t,price=p,change=c,percentChange=pc)
+            crypto.save()
 
-            serializer = CurrencySerializer(data=currency, many=False)
+            serializer = CryptoSerializer(data=crypto, many=False)
             if serializer.is_valid():
                 serializer.save()
 
