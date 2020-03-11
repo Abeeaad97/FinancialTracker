@@ -81,9 +81,9 @@ export default {
         text: 'User Profile'
       },
       {
-        to: '/currency-list',
+        to: '/cryptocurrency-list',
         icon: 'mdi-clipboard-outline',
-        text: 'Currency List'
+        text: 'Cryptocurrency List'
       },
       {
         to: '/stock-list',

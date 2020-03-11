@@ -15,9 +15,9 @@ export default [
     view: 'UserProfile'
   },
   {
-    path: '/currency-list',
-    name: 'Currency List',
-    view: 'CurrencyList'
+    path: '/cryptocurrency-list',
+    name: 'Cryptocurrency List',
+    view: 'CryptoList'
   },
   {
     path: '/stock-list',

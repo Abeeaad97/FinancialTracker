@@ -34,7 +34,7 @@ while True:
     # For Loop - Yahoo Finance requires us to crawl through specific
     # attributes to find data
     for listing in soup.find_all('tr', attrs={'class':'simpTblRow'}):
-        for name in listing.find_all('td', attrs={'aria-label':'Symbol'}):
+        for name in listing.find_all('td', attrs={'aria-label':'Name'}):
             names.append(name.text)
         for price in listing.find_all('td', attrs={'aria-label':'Price (Intraday)'}):
             prices.append(price.text.replace(',', ''))

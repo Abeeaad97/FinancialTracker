@@ -10,14 +10,26 @@ import json
 # List all the currencies in JSON format
 class CryptoList(APIView):
     def get(self, request):
-        currencies = Currency.objects.all()
-        serializer = CurrencySerializer(currencies, many=True)
+        crypto = Crypto.objects.all()
+        serializer = CryptoSerializer(crypto, many=True)
         return Response(serializer.data)
 
     def put(self, request):
         for index in range(0,111):
-            crypto = get_object_or_404(Crypto, id=index)
-            serializer = CryptoSerializer(data=crypto, many=False)
+            stock = get_object_or_404(Stock, id=index)
+
+            id = request.data.getlist('id')
+            i = id[index]
+            ticker = request.data.getlist('ticker')
+            t = ticker[index]
+            price = request.data.getlist('price')
+            p = float(price[index])
+            change = request.data.getlist('change')
+            c = float(change[index])
+            percentChange = request.data.getlist('percentChange')
+            pc = percentChange[index]
+
+            serializer = StockSerializer(instance=stock, data={'id': i, 'ticker': t, 'price': p, 'change': c, 'percentChange': pc}, many=False)
             if serializer.is_valid():
                 serializer.save()
 
@@ -54,16 +66,28 @@ class StockList(APIView):
         return Response(serializer.data)
 
     def put(self, request):
-        for index in range(0,366):
+        for index in range(0,350):
             stock = get_object_or_404(Stock, id=index)
-            serializer = StockSerializer(data=stock, many=False)
+
+            id = request.data.getlist('id')
+            i = id[index]
+            ticker = request.data.getlist('ticker')
+            t = ticker[index]
+            price = request.data.getlist('price')
+            p = float(price[index])
+            change = request.data.getlist('change')
+            c = float(change[index])
+            volume = request.data.getlist('volume')
+            v = volume[index]
+
+            serializer = StockSerializer(instance=stock, data={'id': i, 'ticker': t, 'price': p, 'change': c, 'volume': v}, many=False)
             if serializer.is_valid():
                 serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        for index in range(0,366):
+        for index in range(0,350):
             id = request.data.getlist('id')
             i = id[index]
             ticker = request.data.getlist('ticker')

@@ -13,8 +13,8 @@
       >
         <material-card
           color="green"
-          title="Currencies Table"
-          text="Real-time exchange status of world currencies"
+          title="Cryptocurrency Table"
+          text="Real-time exchange status of world cryptocurrencies"
         >
           <v-data-table
             :headers="headers"
@@ -89,7 +89,7 @@ import axios from 'axios'
 
 export default {
   mounted: function () {
-    this.getCurrencies()
+    this.getCrypto()
     console.log('Mounted Got Here')
   },
   data: () => ({
@@ -119,9 +119,9 @@ export default {
     items: [],
   }),
   methods: {
-    getCurrencies: function () {
+    getCrypto: function () {
     var self = this
-    const url = 'http://localhost:8000/currencies/'
+    const url = 'http://localhost:8000/crypto/'
     axios.get(url, {
       dataType: 'json',
       headers: {

@@ -9,7 +9,7 @@ import time
 
 API_ENDPOINT = "http://localhost:8000/stocks/"
 API_KEY = "b*8p4e%!rk#hzm04$@j@6ie54&*wg+cpmmua0f_-(h4k(qpq0!"
-METHOD = "PUT"
+METHOD = "POST"
 
 # Data Table
 id=[]
@@ -33,7 +33,7 @@ while True:
     soup = BeautifulSoup(data, 'lxml')
 
     for listing in soup.find_all('tr', attrs={'class':'simpTblRow'}):
-        for name in listing.find_all('td', attrs={'aria-label':'Symbol'}):
+        for name in listing.find_all('td', attrs={'aria-label':'Name'}):
             names.append(name.text)
         for price in listing.find_all('td', attrs={'aria-label':'Price (Intraday)'}):
             prices.append(price.text.replace(',', ''))
