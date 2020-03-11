@@ -20,6 +20,18 @@ percentChanges=[]
 index = 0
 url_index = 0
 
+Url = "https://finance.yahoo.com/quote/MSFT/history?p=MSFT"
+
+r = requests.get(Url)
+data = r.text
+test = BeautifulSoup(data, 'lxml')
+
+listing = test.find('tr', attrs={'class': 'BdT'})
+date = listing.find('td', attrs={'class': 'Py(10px) Pstart(10px)'})
+
+print(listing.text)
+print(date.text)
+
 while True:
     # URL to scrape data from
     CryptoUrl = "https://finance.yahoo.com/cryptocurrencies?count=100&offset=" + str(url_index)
@@ -57,10 +69,11 @@ while True:
         url_index += 100
     else:
         if METHOD == "POST":
-            requests.post(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
+            #requests.post(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
             sys.exit()
 
-        requests.put(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
+        #requests.put(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
         url_index = 0
         index = 0
-        time.sleep(60)
+        #time.sleep(60)
+        sys.exit()
