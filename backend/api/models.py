@@ -24,6 +24,7 @@ class Stock(models.Model):
 
 
 class Indice(models.Model):
+    id = models.IntegerField(primary_key=True, default=0)
     ticker = models.CharField(max_length=10)           # Name of the stock
     price = models.FloatField()                         # Opening stock price
     change = models.FloatField()                        # Closing stock price

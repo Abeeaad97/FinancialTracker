@@ -116,8 +116,31 @@ class IndiceList(APIView):
         serializer = IndiceSerializer(indices, many=True)
         return Response(serializer.data)
 
+    def put(self, request):
+        for index in range(0,350):
+            indice = get_object_or_404(Indice, id=index)
+
+            id = request.data.getlist('id')
+            i = id[index]
+            ticker = request.data.getlist('ticker')
+            t = ticker[index]
+            price = request.data.getlist('price')
+            p = float(price[index])
+            change = request.data.getlist('change')
+            c = float(change[index])
+            percentChange = request.data.getlist('percentChange')
+            pc = percentChange[index]
+
+            serializer = StockSerializer(instance=indice, data={'id': i, 'ticker': t, 'price': p, 'change': c, 'percentChange': pc}, many=False)
+            if serializer.is_valid():
+                serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def post(self, request):
         for index in range(0,35):
+            id = request.data.getlist('id')
+            i = id[index]
             ticker = request.data.getlist('ticker')
             t = ticker[index]
             price = request.data.getlist('price')
@@ -127,7 +150,7 @@ class IndiceList(APIView):
             percentChange = request.data.getlist('percentChange')
             pc = float(percentChange[index])
 
-            indice = Indice.objects.create(ticker=t,price=p,change=c,percentChange=pc)
+            indice = Indice.objects.create(id=i, ticker=t,price=p,change=c,percentChange=pc)
             indice.save()
 
             serializer = IndiceSerializer(data=indice, many=False)

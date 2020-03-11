@@ -34,4 +34,13 @@ class StockSerializer(serializers.ModelSerializer):
 class IndiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Indice
-        fields = ('ticker', 'price', 'change', 'percentChange')
+        fields = ('id', 'ticker', 'price', 'change', 'percentChange')
+
+    def update(self, instance, validated_data):
+        instance.ticker = validated_data.get('ticker', instance.ticker)
+        instance.price = validated_data.get('price', instance.price)
+        instance.change = validated_data.get('change', instance.change)
+        instance.volume = validated_data.get('percentChange', instance.volume)
+
+        instance.save()
+        return instance
