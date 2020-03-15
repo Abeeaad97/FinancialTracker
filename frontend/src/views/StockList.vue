@@ -34,7 +34,7 @@
               slot="items"
               slot-scope="{ item }"
             >
-              <td>{{ item.ticker }}</td>
+              <td>{{ item.name }}</td>
               <td>{{ item.price }}</td>
               <td>{{ item.change }}</td>
               <td class="text-xs-right"> {{ item.volume }} </td>
@@ -70,7 +70,7 @@
               slot="items"
               slot-scope="{ item }"
             >
-              <td>{{ item.ticker }}</td>
+              <td>{{ item.name }}</td>
               <td>{{ item.price }}</td>
               <td>{{ item.change }}</td>
               <td class="text-xs-right"> {{ item.percentChange }} </td>
@@ -96,8 +96,8 @@ export default {
     headers: [
       {
         sortable: false,
-        text: 'Ticker',
-        value: 'ticker'
+        text: 'Name',
+        value: 'name'
       },
       {
         sortable: false,

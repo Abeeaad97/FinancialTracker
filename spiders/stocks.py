@@ -12,7 +12,7 @@ API_KEY = "b*8p4e%!rk#hzm04$@j@6ie54&*wg+cpmmua0f_-(h4k(qpq0!"
 METHOD = "POST"
 
 # Data Table
-id=[]
+ids=[]
 names=[]
 prices=[]
 changes=[]
@@ -41,26 +41,25 @@ while True:
             changes.append(change.text)
         for volume in listing.find_all('td', attrs={'aria-label':'Volume'}):
             volumes.append(volume.text)
-        id.append(index)
+        ids.append(index)
         index += 1
 
-    data = {
-        "id": id,
+    stocks = {
+        "id": ids,
         "ticker": names,
         "price": prices,
         "change": changes,
         "volume": volumes
     }
 
-
     if url_index != 400:
         url_index += 100
     else:
         if METHOD == "POST":
-            requests.post(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "volume": data["volume"]})
+            requests.post(url=API_ENDPOINT, data=stocks)
             sys.exit()
 
-        requests.put(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "volume": data["volume"]})
+        requests.put(url=API_ENDPOINT, data=stocks)
         url_index = 0
         index = 0
         time.sleep(60)

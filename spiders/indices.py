@@ -11,7 +11,7 @@ API_KEY = "b*8p4e%!rk#hzm04$@j@6ie54&*wg+cpmmua0f_-(h4k(qpq0!"
 METHOD = "POST"
 
 # Data Table
-id=[]
+ids=[]
 names=[]
 prices=[]
 changes=[]
@@ -38,23 +38,15 @@ while True:
         changes.append(float(change.text.replace(',', '')))
     for percentChange in soup.find_all('td', attrs={'class':'data-col4'}):
         percentChanges.append(float(percentChange.text.replace(',', '').replace('%', '')))
-        id.append(index)
+        ids.append(index)
         index += 1
 
-    data = {
-        "id": id,
-        "ticker": names,
-        "price": prices,
-        "change": changes,
-        "percentChange": percentChanges
-    }
-
     if METHOD == "POST":
-        requests.post(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
+        requests.post(url=API_ENDPOINT, data={"id": ids, "name": names, "price": prices, "change": changes, "percentChange": percentChanges})
         sys.exit()
     elif index == 35:
         index = 0
 
-    requests.put(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
+    requests.put(url=API_ENDPOINT, data={"id": ids, "name": names, "price": prices, "change": changes, "percentChange": percentChanges})
 
     time.sleep(60)

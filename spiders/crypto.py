@@ -5,13 +5,15 @@ import csv
 import pandas as pd
 import requests
 import time
+import json
+from collections import defaultdict
 
 API_ENDPOINT = "http://localhost:8000/crypto/"
 API_KEY = "b*8p4e%!rk#hzm04$@j@6ie54&*wg+cpmmua0f_-(h4k(qpq0!"
-METHOD = "PUT"
+METHOD = "POST"
 
 # Data Table
-id=[]
+ids=[]
 names=[]
 prices=[]
 changes=[]
@@ -19,18 +21,6 @@ percentChanges=[]
 
 index = 0
 url_index = 0
-
-Url = "https://finance.yahoo.com/quote/MSFT/history?p=MSFT"
-
-r = requests.get(Url)
-data = r.text
-test = BeautifulSoup(data, 'lxml')
-
-listing = test.find('tr', attrs={'class': 'BdT'})
-date = listing.find('td', attrs={'class': 'Py(10px) Pstart(10px)'})
-
-print(listing.text)
-print(date.text)
 
 while True:
     # URL to scrape data from
@@ -43,6 +33,7 @@ while True:
     # Load the data into soup
     soup = BeautifulSoup(data, 'lxml')
 
+
     # For Loop - Yahoo Finance requires us to crawl through specific
     # attributes to find data
     for listing in soup.find_all('tr', attrs={'class':'simpTblRow'}):
@@ -54,26 +45,18 @@ while True:
             changes.append(change.text)
         for percentChange in listing.find_all('td', attrs={'aria-label':'% Change'}):
             percentChanges.append(percentChange.text.replace('%', ''))
-        id.append(index)
+        ids.append(index)
         index += 1
 
-    data = {
-        "id": id,
-        "ticker": names,
-        "price": prices,
-        "change": changes,
-        "percentChange": percentChanges
-    }
 
     if url_index != 100:
         url_index += 100
     else:
         if METHOD == "POST":
-            #requests.post(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
+            requests.post(url=API_ENDPOINT, data={"id": ids, "name": names, "price": prices, "change": changes, "percentChange": percentChanges})
             sys.exit()
 
-        #requests.put(url=API_ENDPOINT, data={"id": data["id"], "ticker": data["ticker"], "price": data["price"], "change": data["change"], "percentChange": data["percentChange"]})
+        requests.put(url=API_ENDPOINT, data={"id": ids, "name": names, "price": prices, "change": changes, "percentChange": percentChanges})
         url_index = 0
         index = 0
-        #time.sleep(60)
-        sys.exit()
+        time.sleep(60)

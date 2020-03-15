@@ -2,12 +2,19 @@ from rest_framework import serializers
 from .models import *
 
 class CryptoSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        many = kwargs.pop('many', True)
+        super(CryptoSerializer, self).__init__(many=many, *args, **kwargs)
+
     class Meta:
         model = Crypto
-        fields = ('id', 'ticker', 'price', 'change', 'percentChange')
+        fields = ('id', 'name', 'price', 'change', 'percentChange')
+
+    def create(self, validated_data):
+        return Crypto.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.ticker = validated_data.get('ticker', instance.ticker)
+        instance.name = validated_data.get('name', instance.name)
         instance.price = validated_data.get('price', instance.price)
         instance.change = validated_data.get('change', instance.change)
         instance.volume = validated_data.get('percentChange', instance.volume)
@@ -19,10 +26,13 @@ class CryptoSerializer(serializers.ModelSerializer):
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
-        fields = ('id', 'ticker', 'price', 'change', 'volume')
+        fields = ('id', 'name', 'price', 'change', 'volume')
+
+    def create(self, validated_data):
+        return Stock.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.ticker = validated_data.get('ticker', instance.ticker)
+        instance.name = validated_data.get('name', instance.name)
         instance.price = validated_data.get('price', instance.price)
         instance.change = validated_data.get('change', instance.change)
         instance.volume = validated_data.get('volume', instance.volume)
@@ -34,13 +44,25 @@ class StockSerializer(serializers.ModelSerializer):
 class IndiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Indice
-        fields = ('id', 'ticker', 'price', 'change', 'percentChange')
+        fields = ('id', 'name', 'price', 'change', 'percentChange')
+
+    def create(self, validated_data):
+        return Indice.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.ticker = validated_data.get('ticker', instance.ticker)
+        instance.ticker = validated_data.get('name', instance.ticker)
         instance.price = validated_data.get('price', instance.price)
         instance.change = validated_data.get('change', instance.change)
         instance.volume = validated_data.get('percentChange', instance.volume)
 
         instance.save()
         return instance
+
+
+class MSFTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MSFTHistorical
+        fields = ('date', 'open', 'high', 'low', 'close', 'adjClose', 'volume')
+
+    def create(self, validated_data):
+        return MSFTHistorical.objects.create(**validated_data)

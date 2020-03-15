@@ -34,7 +34,7 @@
               slot="items"
               slot-scope="{ item }"
             >
-              <td>{{ item.ticker }}</td>
+              <td>{{ item.name }}</td>
               <td>{{ item.price }}</td>
               <td>{{ item.change }}</td>
               <td class="text-xs-right"> {{ item.percentChange }} </td>
@@ -70,7 +70,7 @@
               slot="items"
               slot-scope="{ item }"
             >
-              <td>{{ item.ticker }}</td>
+              <td>{{ item.name }}</td>
               <td>{{ item.price }}</td>
               <td>{{ item.change }}</td>
               <td class="text-xs-right"> {{ item.percentChange }} </td>
@@ -97,7 +97,7 @@ export default {
       {
         sortable: false,
         text: 'Name',
-        value: 'ticker'
+        value: 'name'
       },
       {
         sortable: false,

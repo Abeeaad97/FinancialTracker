@@ -1,9 +1,10 @@
 import re
 from io import StringIO
 from datetime import datetime, timedelta
-
 import requests
 import pandas as pd
+
+API_ENDPOINT = "http://localhost:8000/msft/"
 
 
 class HistoricalData:
@@ -35,10 +36,44 @@ class HistoricalData:
         url = self.quote_link.format(quote=self.symbol, dfrom=datefrom, dto=dateto, crumb=self.crumb)
         response = self.session.get(url)
         response.raise_for_status()
-        return pd.read_csv(StringIO(response.text), parse_dates=['Date'])
+        test = response.text.replace('\n', '').split(",")
+
+        data = {
+            "date": [],
+            "open": [],
+            "high": [],
+            "low": [],
+            "close": [],
+            "adjClose": [],
+            "volume": []
+        }
+
+        for index in range (6, 1506, 6):
+            currentData = test[index]
+            if index == 6:
+                data["date"].append(currentData[6:])
+            elif index == 1500:
+                data["volume"].append(currentData[:8])
+                data["volume"].append(test[index+6])
+                data["date"].append(currentData[8:])
+            else:
+                data["volume"].append(currentData[:8])
+                data["date"].append(currentData[8:])
+            data["open"].append(test[index+1])
+            data["high"].append(test[index+2])
+            data["low"].append(test[index+3])
+            data["close"].append(test[index+4])
+            data["adjClose"].append(test[index+5])
+
+        print(data["date"])
+        return data
 
 
+#pd.read_csv(StringIO(response.text), parse_dates=['Date'])
 
-df = HistoricalData('MSFT', days_back=365).get_quote()
+df = HistoricalData('MSFT', days_back=362).get_quote()
 
-df.to_csv(r'C:\Users\tyler\Documents\FinancialTracker\data.csv')
+requests.post(url=API_ENDPOINT, data=df)
+
+
+#df.to_csv(r'C:\Users\tyler\Documents\FinancialTracker\data.csv')
