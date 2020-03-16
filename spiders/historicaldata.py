@@ -1,8 +1,11 @@
-import re
+import plotly.express as px
+import plotly.graph_objects as go
 from io import StringIO
 from datetime import datetime, timedelta
 import requests
+import json
 import pandas as pd
+import re
 
 API_ENDPOINT = "http://localhost:8000/msft/"
 
@@ -13,10 +16,13 @@ class HistoricalData:
     crumble_regex = r'CrumbStore":{"crumb":"(.*?)"}'
     quote_link = 'https://query1.finance.yahoo.com/v7/finance/download/{quote}?period1={dfrom}&period2={dto}&interval=1d&events=history&crumb={crumb}'
 
-    def __init__(self, symbol, days_back=7):
-        self.symbol = symbol
+    def __init__(self, quote, days):
+        self.symbol = quote
         self.session = requests.Session()
-        self.dt = timedelta(days=days_back)
+        self.dt = timedelta(days=days)
+
+        self.quote = quote
+        self.days = days
 
     def get_crumb(self):
         response = self.session.get(self.crumb_link.format(self.symbol), timeout=self.timeout)
@@ -66,14 +72,41 @@ class HistoricalData:
             data["adjClose"].append(test[index+5])
 
         print(data["date"])
+        #pd.read_csv(StringIO(response.text), parse_dates=['Date'])
         return data
 
 
-#pd.read_csv(StringIO(response.text), parse_dates=['Date'])
+    def create_candlestick(self):
+        r = requests.get(f'https://financialmodelingprep.com/api/v3/historical-price-full/{self.quote}?timeseries={self.days}')
+        r = r.json()
 
-df = HistoricalData('MSFT', days_back=362).get_quote()
+        stockdata = r['historical']
+        stockdata_df = pd.DataFrame(stockdata)
 
-requests.post(url=API_ENDPOINT, data=df)
+        fig = go.Figure(data=[go.Candlestick(x=stockdata_df['date'],
+                        open=stockdata_df['open'],
+                        high=stockdata_df['high'],
+                        low=stockdata_df['low'],
+                        close=stockdata_df['close'])])
+        fig.update_layout(
+            title= {
+                'text': self.quote,
+              'y':0.9,
+                'x':0.5,
+                'xanchor': 'center',
+                'yanchor': 'top'},
+              font=dict(
+                family="Courier New, monospace",
+                size=20,
+                color="#7f7f7f"
+            )
+            )
+
+        fig.show()
 
 
-#df.to_csv(r'C:\Users\tyler\Documents\FinancialTracker\data.csv')
+HistoricalData('MSFT', days=365).create_candlestick()
+
+
+#MSFT = HistoricalData('MSFT', days=365).get_quote()
+#requests.post(url=API_ENDPOINT, data=MSFT)
