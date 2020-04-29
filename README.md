@@ -77,6 +77,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 ## Authors
 
 * **Tyler Bloom** - (https://github.com/Tbloom9787)
+* **Abid Bakhtiyar** = (https://github.com/Abeeaad97)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
