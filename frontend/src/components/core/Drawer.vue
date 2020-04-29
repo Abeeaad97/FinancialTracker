@@ -82,22 +82,22 @@ export default {
       },
       {
         to: '/cryptocurrency-list',
-        icon: 'mdi-clipboard-outline',
+        icon: 'mdi-coin',
         text: 'Cryptocurrency List'
       },
       {
         to: '/stock-list',
-        icon: 'mdi-format-font',
+        icon: 'mdi-bank',
         text: 'Stock List'
       },
       {
         to: '/indices-list',
-        icon: 'mdi-chart-bubble',
+        icon: 'mdi-library',
         text: 'Indices List'
       },
       {
         to: '/trend-analysis',
-        icon: 'mdi-map-marker',
+        icon: 'mdi-chart-line',
         text: 'Trend Analysis'
       },
       {
