@@ -31,10 +31,12 @@ export default [
   },
   {
     path: '/trend-analysis',
+    name: 'Trend Analysis',
     view: 'Maps'
   },
   {
     path: '/notifications',
+    name: 'Notifications',
     view: 'Notifications'
   },
 ]
