@@ -5,40 +5,82 @@
     grid-list-xl
   >
     <v-layout wrap>
+       <v-flex
+        md12
+        lg6
+      >
+        <material-card
+          color="green"
+          title="Top Stocks"
+          text="Your Top Stocks"
+        >
+          <v-data-table
+            :headers="headers"
+            :items="items"
+            :items-per-page="5"
+            item-key="name"
+            class="elevation-1"
+            :footer-props="{
+              showFirstLastPage: true,
+            }"
+          >
+            <template
+              slot="headerCell"
+              slot-scope="{ header }"
+            >
+              <span
+                class="font-weight-light text-warning text--darken-3"
+                v-text="header.text"
+              />
+            </template>
+            <template
+              slot="items"
+              slot-scope="{ index, item }"
+            >
+              <td>{{ item.name }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.change }}</td>
+              <td class="text-xs-right"> {{ item.volume }} </td>
+            </template>
+          </v-data-table>
+        </material-card>
+      </v-flex>
       <v-flex
         md12
-        sm12
-        lg4
+        lg6
       >
-        <material-chart-card
-          :data="dailySalesChart.data"
-          :options="dailySalesChart.options"
-          color="info"
-          type="Line"
+        <material-card
+          color="red"
+          title="Cryptocurrency"
+          text="Your Crypto Trade Value"
         >
-          <h4 class="title font-weight-light">Daily Sales</h4>
-          <p class="category d-inline-flex font-weight-light">
-            <v-icon
-              color="green"
-              small
+          <v-data-table
+            :headers="cryptoHeaders"
+            :items="cryptoItems"
+            hide-actions
+          >
+            <template
+              slot="headerCell"
+              slot-scope="{ header }"
             >
-              mdi-arrow-up
-            </v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's sales
-          </p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
+              <span
+                class="font-weight-light text-warning text--darken-3"
+                v-text="header.text"
+              />
+            </template>
+            <template
+              slot="items"
+              slot-scope="{ index, cryptoItem }"
             >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-          </template>
-        </material-chart-card>
+              <td>{{ crypyoItem.name }}</td>
+              <td>{{ cryptoItem.price }}</td>
+              <td>{{ cryptoItem.change }}</td>
+              <td class="text-xs-right"> {{ cryptoItem.percentChange }} </td>
+            </template>
+          </v-data-table>
+        </material-card>
       </v-flex>
+      
       <v-flex
         md12
         sm12
@@ -152,46 +194,6 @@
           sub-icon="mdi-update"
           sub-text="Just Updated"
         />
-      </v-flex>
-      <v-flex
-        md12
-        lg6
-      >
-        <material-card
-          color="green"
-          title="Top Stocks"
-          text="Your Top Stocks"
-        >
-          <v-data-table
-            :headers="headers"
-            :items="items"
-            :items-per-page="5"
-            item-key="name"
-            class="elevation-1"
-            :footer-props="{
-              showFirstLastPage: true,
-            }"
-          >
-            <template
-              slot="headerCell"
-              slot-scope="{ header }"
-            >
-              <span
-                class="font-weight-light text-warning text--darken-3"
-                v-text="header.text"
-              />
-            </template>
-            <template
-              slot="items"
-              slot-scope="{ index, item }"
-            >
-              <td>{{ item.name }}</td>
-              <td>{{ item.price }}</td>
-              <td>{{ item.change }}</td>
-              <td class="text-xs-right"> {{ item.volume }} </td>
-            </template>
-          </v-data-table>
-        </material-card>
       </v-flex>
       <v-flex
         md12
@@ -371,29 +373,19 @@ export default {
   mounted: function (){
       this.getStocks()
       console.log('Mounted Got Here')
+      this.getCrypto()
+      console.log('Mounted Got Here')
     },
   data() {
     return {
-      dailySalesChart: {
-        data: {
-          labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-          series: [
-            [12, 17, 7, 17, 23, 18, 38]
-          ]
-        },
-        options: {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0
-          }
-        }
+      weather: {
+          labels: ['SU', 'MO', 'TU', 'WED', 'TH', 'FR', 'SA'],
+        time: 0,
+        forecast: [
+          { day: 'Tuesday', icon: 'mdi-white-balance-sunny', temp: '24\xB0/12\xB0' },
+          { day: 'Wednesday', icon: 'mdi-white-balance-sunny', temp: '22\xB0/14\xB0' },
+          { day: 'Thursday', icon: 'mdi-cloud', temp: '25\xB0/15\xB0' },
+        ],
       },
       dataCompletedTasksChart: {
         data: {
@@ -448,6 +440,30 @@ export default {
           }]
         ]
       },
+      cryptoHeaders: [
+        {
+          sortable: false,
+          text: 'Name',
+          value: 'name'
+        },
+        {
+          sortable: false,
+          text: 'Price',
+          value: 'price'
+        },
+        {
+          sortable: false,
+          text: 'Change',
+          value: 'change',
+        },
+        {
+          sortable: false,
+          text: 'Percent Change',
+          value: 'percentChange',
+          align: 'right'
+        }
+      ],
+      cryptoItems: [],
       headers: [
         {
           sortable: false,
@@ -483,6 +499,24 @@ export default {
   methods: {
     complete (index) {
       this.list[index] = !this.list[index]
+    },
+    getCrypto: function() {
+      var crypt = this
+      const url = 'http://localhost:8000/crypto/'
+      axios.get(url, {
+        dataType: 'json',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        console.log(response.data)
+        crypt.cryptoitems = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
     },
     getStocks: function () {
     var self = this
