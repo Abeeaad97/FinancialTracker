@@ -45,55 +45,18 @@
           </v-data-table>
         </material-card>
       </v-flex>
-      
-      
-      <v-flex
-        md12
-        sm12
-        lg4
-      >
-        <material-chart-card
-          :data="dailySalesChart.data"
-          :options="dailySalesChart.options"
-          color="info"
-          type="Line"
-        >
-          <h4 class="title font-weight-light">Weekly Spending</h4>
-          <p class="category d-inline-flex font-weight-light">
-            <v-icon
-              color="green"
-              small
-            >
-              mdi-arrow-up
-            </v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's spending
-          </p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
       <v-flex
         md12
         lg6
       >
         <material-card
           color="red"
-          title="Crypto Currency"
+          title="Cryptocurrency"
           text="Current Crypto Values"
         >
           <v-data-table
             :headers="cryptoHeaders"
             :items="cryptoItems"
-            :items-per-page="5"
           >
             <template
               slot="headerCell"
@@ -105,7 +68,7 @@
               />
             </template>
             <template
-              slot="items"
+              slot="cryptoItems"
               slot-scope="{ index, item }"
             >
               <td>{{ item.name }}</td>
@@ -115,41 +78,6 @@
             </template>
           </v-data-table>
         </material-card>
-      </v-flex>
-      <v-flex
-        md12
-        sm12
-        lg4
-      >
-        <material-chart-card
-          :data="dataCompletedTasksChart.data"
-          :options="dataCompletedTasksChart.options"
-          color="green"
-          type="Line"
-        >
-          <h3 class="title font-weight-light">Daily Value: EUU</h3>
-          <p class="category d-inline-flex font-weight-light">
-            <v-icon
-              color="red"
-              small
-            >
-              mdi-arrow-down
-            </v-icon>
-            <span class="red--text">80%</span>&nbsp;
-            Decrease in value
-            
-            </p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 26 minutes ago</span>
-          </template>
-        </material-chart-card>
       </v-flex>
       <v-flex
         sm6
@@ -175,7 +103,7 @@
           color="orange"
           icon="mdi-bank"
           title="Avaiable Stocks"
-          value="301/500"
+          value="200/500"
         />
       </v-flex>
       <v-flex
@@ -188,7 +116,7 @@
           color="red"
           icon="mdi-coin"
           title="Crypto Trackers"
-          value="1/50"
+          value="111/200"
         />
       </v-flex>
       <v-flex
@@ -215,6 +143,8 @@ import axios from 'axios'
 export default {
   mounted: function (){
       this.getStocks()
+      console.log('Mounted Got Here')
+      this.getCrypto()
       console.log('Mounted Got Here')
     },
   data() {
@@ -261,38 +191,6 @@ export default {
           }
         }
       },
-      emailsSubscriptionChart: {
-        data: {
-          labels: ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De'],
-          series: [
-            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
-
-          ]
-        },
-        options: {
-          axisX: {
-            showGrid: false
-          },
-          low: 0,
-          high: 1000,
-          chartPadding: {
-            top: 0,
-            right: 5,
-            bottom: 0,
-            left: 0
-          }
-        },
-        responsiveOptions: [
-          ['screen and (max-width: 640px)', {
-            seriesBarDistance: 5,
-            axisX: {
-              labelInterpolationFnc: function (value) {
-                return value[0]
-              }
-            }
-          }]
-        ]
-      },
       cryptoHeaders: [
         {
           sortable: false,
@@ -316,14 +214,7 @@ export default {
           align: 'right'
         }
       ],
-      cryptoItems: [
-        {
-          name: 'Exchange Union USD',
-          price: '0.6026',
-          change: '0.0512',
-          percentChange: '9.29'
-        }
-      ],
+      cryptoItems: [],
       headers: [
         {
           sortable: false,
@@ -360,6 +251,24 @@ export default {
     complete (index) {
       this.list[index] = !this.list[index]
     },
+    getCrypto: function() {
+    var self = this
+    const url = 'http://localhost:8000/crypto/'
+    axios.get(url, {
+      dataType: 'json',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      console.log(response.data)
+      self.cryptoItems = response.data
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    },
     getStocks: function () {
     var self = this
     const url = 'http://localhost:8000/stocks/'
@@ -380,7 +289,7 @@ export default {
     .catch(error => {
       console.log(error)
     })
-    }
+  }
   }
 }
 </script>
