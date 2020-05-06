@@ -11,8 +11,10 @@
       <v-flex
         md12
       >
+      <v-tooltip left>
         <material-card
           color="green"
+          slot="activator"
           title="Cryptocurrency Table"
           text="Real-time exchange status of world cryptocurrencies"
         >
@@ -43,6 +45,8 @@
             </template>
           </v-data-table>
         </material-card>
+        <span>This cryptocurrency list shows hourly changes and is updated in real-time </span>
+        </v-tooltip>
       </v-flex>
 <!--      <v-flex
         md12
