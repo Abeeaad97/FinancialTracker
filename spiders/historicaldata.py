@@ -6,10 +6,14 @@ import requests
 import json
 import pandas as pd
 import re
+import chart_studio
+import chart_studio.plotly as py
 
 API_ENDPOINT = "http://localhost:8000/msft/"
 
-
+username = 'Abeeaad97' 
+api_key = 'v059luL7zpSXW8U0atr3' 
+chart_studio.tools.set_credentials_file(username=username, api_key=api_key)
 class HistoricalData:
     timeout = 2
     crumb_link = 'https://finance.yahoo.com/quote/{0}/history?p={0}'
@@ -103,6 +107,7 @@ class HistoricalData:
             )
 
         fig.show()
+        py.plot(fig, filename='data', auto_open = True)
 
 
 HistoricalData('MSFT', days=365).create_candlestick()
