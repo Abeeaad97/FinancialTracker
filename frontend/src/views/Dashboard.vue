@@ -9,6 +9,7 @@
         md12
         lg6
       >
+      <v-tooltip top>
         <material-card
           color="green"
           title="Top Stocks"
@@ -44,11 +45,14 @@
             </template>
           </v-data-table>
         </material-card>
+        <span>5 most active stocks immediately shown</span>
+        </v-tooltip>
       </v-flex>
       <v-flex
         md12
         lg6
       >
+      <v-tooltip top>
         <material-card
           color="red"
           title="Cryptocurrency"
@@ -84,6 +88,8 @@
             </template>
           </v-data-table>
         </material-card>
+        <span>5 most active cryptocurrencies immediately shown</span>
+        </v-tooltip>
       </v-flex>
       <v-flex
         sm6
