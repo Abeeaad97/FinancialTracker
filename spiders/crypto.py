@@ -6,19 +6,12 @@ import pandas as pd
 import requests
 import time
 import json
-from collections import defaultdict
 
 API_ENDPOINT = "http://localhost:8000/crypto/"
 API_KEY = "b*8p4e%!rk#hzm04$@j@6ie54&*wg+cpmmua0f_-(h4k(qpq0!"
-METHOD = "POST"
+METHOD = "PUT"
 
-# Data Table
-ids=[]
-names=[]
-prices=[]
-changes=[]
-percentChanges=[]
-
+cryptos = []
 index = 0
 url_index = 0
 
@@ -37,26 +30,28 @@ while True:
     # For Loop - Yahoo Finance requires us to crawl through specific
     # attributes to find data
     for listing in soup.find_all('tr', attrs={'class':'simpTblRow'}):
+        listing_dict = {}
+        listing_dict["id"] = index
         for name in listing.find_all('td', attrs={'aria-label':'Name'}):
-            names.append(name.text)
+            listing_dict["name"] = name.text
         for price in listing.find_all('td', attrs={'aria-label':'Price (Intraday)'}):
-            prices.append(price.text.replace(',', ''))
+            listing_dict["price"] = price.text.replace(',', '')
         for change in listing.find_all('td', attrs={'aria-label':'Change'}):
-            changes.append(change.text)
+            listing_dict["change"] = change.text.replace(',', '')
         for percentChange in listing.find_all('td', attrs={'aria-label':'% Change'}):
-            percentChanges.append(percentChange.text.replace('%', ''))
-        ids.append(index)
+            listing_dict["percentChange"] = percentChange.text
         index += 1
 
+        cryptos.append(listing_dict)
 
     if url_index != 100:
         url_index += 100
     else:
         if METHOD == "POST":
-            requests.post(url=API_ENDPOINT, data={"id": ids, "name": names, "price": prices, "change": changes, "percentChange": percentChanges})
+            requests.post(url=API_ENDPOINT, json=json.dumps(cryptos))
             sys.exit()
 
-        requests.put(url=API_ENDPOINT, data={"id": ids, "name": names, "price": prices, "change": changes, "percentChange": percentChanges})
+        requests.put(url=API_ENDPOINT, json=json.dumps(cryptos))
         url_index = 0
         index = 0
         time.sleep(60)

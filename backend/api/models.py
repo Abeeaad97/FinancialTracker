@@ -3,10 +3,10 @@ from django.db import models
 # Template Model
 class Crypto(models.Model):
     id = models.IntegerField(primary_key=True, default=0)
-    name = models.CharField(max_length=30)           # Name of the stock
-    price = models.FloatField()                         # Opening stock price
-    change = models.FloatField()                        # Closing stock price
-    percentChange = models.FloatField()                     # Amount of sales
+    name = models.CharField(max_length=100)           # Name of the stock
+    price = models.CharField(max_length=20)                         # Opening stock price
+    change = models.CharField(max_length=20)                        # Closing stock price
+    percentChange = models.CharField(max_length=20)                     # Amount of sales
 
     def __str__(self):
         return self.name
@@ -14,10 +14,10 @@ class Crypto(models.Model):
 
 class Stock(models.Model):
     id = models.IntegerField(primary_key=True, default=0)
-    name = models.CharField(max_length=30)           # Name of the stock
-    price = models.FloatField()                         # Opening stock price
-    change = models.FloatField()                        # Closing stock price
-    volume = models.CharField(max_length=10)            # Amount of sales
+    name = models.CharField(max_length=100)           # Name of the stock
+    price = models.CharField(max_length=20)                         # Opening stock price
+    change = models.CharField(max_length=20)                        # Closing stock price
+    volume = models.CharField(max_length=20)            # Amount of sales
 
     def __str__(self):
         return self.name
@@ -25,10 +25,10 @@ class Stock(models.Model):
 
 class Indice(models.Model):
     id = models.IntegerField(primary_key=True, default=0)
-    name = models.CharField(max_length=30)           # Name of the stock
-    price = models.FloatField()                         # Opening stock price
-    change = models.FloatField()                        # Closing stock price
-    percentChange = models.FloatField()            # Amount of sales
+    name = models.CharField(max_length=100)           # Name of the stock
+    price = models.CharField(max_length=20)                         # Opening stock price
+    change = models.CharField(max_length=20)                        # Closing stock price
+    percentChange = models.CharField(max_length=20)            # Amount of sales
 
     def __str__(self):
         return self.name

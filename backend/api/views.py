@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
@@ -10,40 +8,32 @@ from .serializer import *
 import json
 
 # List all the currencies in JSON format
-class CryptoView(ListCreateAPIView):
-    queryset = Crypto.objects.all()
-    serializer_class = CryptoSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+class CryptoList(APIView):
+    def get(self, request):
+        cryptos = Crypto.objects.all()
+        serializer = CryptoSerializer(cryptos, many=True)
+        return Response(serializer.data)
 
     def put(self, request):
+        cryptos = json.loads(request.data)
         for index in range(0,111):
-            stock = get_object_or_404(Stock, id=index)
-
-            id = request.data.getlist('id')
-            i = id[index]
-            ticker = request.data.getlist('name')
-            t = ticker[index]
-            price = request.data.getlist('price')
-            p = float(price[index])
-            change = request.data.getlist('change')
-            c = float(change[index])
-            percentChange = request.data.getlist('percentChange')
-            pc = percentChange[index]
-
-            serializer = StockSerializer(instance=stock, data={'id': i, 'name': t, 'price': p, 'change': c, 'percentChange': pc}, many=False, partial=True)
+            saved_crypto = get_object_or_404(Crypto, id=index)
+            curr_crypto = cryptos[index]
+            serializer = CryptoSerializer(instance=saved_crypto, data=curr_crypto, many=False, partial=True)
             if serializer.is_valid():
                 serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+    def post(self, request):
+        cryptos = json.loads(request.data)
+        for index in range(0,111):
+            curr_crypto = cryptos[index]
+            serializer = CryptoSerializer(data=curr_crypto, many=False)
+            if serializer.is_valid():
+                serializer.save()
 
-class SingleCryptoView(RetrieveUpdateDestroyAPIView):
-    queryset = Crypto.objects.all()
-    serializer_class = CryptoSerializer
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # List all the stocks in JSON format
@@ -54,39 +44,23 @@ class StockList(APIView):
         return Response(serializer.data)
 
     def put(self, request):
-        for index in range(0,325):
-            stock = get_object_or_404(Stock, id=index)
-            id = request.data.getlist('id')
-            i = id[index]
-            ticker = request.data.getlist('ticker')
-            t = ticker[index]
-            price = request.data.getlist('price')
-            p = float(price[index])
-            change = request.data.getlist('change')
-            c = float(change[index])
-            volume = request.data.getlist('volume')
-            v = volume[index]
+        stocks = json.loads(request.data)
+        for index in range(0, 200):
+            saved_stock = get_object_or_404(Stock, id=index)
+            curr_stock = stocks[index]
 
-            serializer = StockSerializer(instance=stock, data={'id': i, 'name': t, 'price': p, 'change': c, 'volume': v}, many=False, partial=True)
+            serializer = StockSerializer(instance=saved_stock, data=curr_stock, many=False, partial=True)
             if serializer.is_valid():
                 serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        for index in range(0,325):
-            id = request.data.getlist('id')
-            i = id[index]
-            ticker = request.data.getlist('ticker')
-            t = ticker[index]
-            price = request.data.getlist('price')
-            p = float(price[index])
-            change = request.data.getlist('change')
-            c = float(change[index])
-            volume = request.data.getlist('volume')
-            v = volume[index]
-
-            serializer = StockSerializer(data={'id': i, 'name': t, 'price': p, 'change': c, 'volume': v}, many=False)
+        stocks = json.loads(request.data)
+        print(stocks)
+        for index in range(0,200):
+            curr_stock = stocks[index]
+            serializer = StockSerializer(data=curr_stock, many=False)
             if serializer.is_valid():
                 serializer.save()
 
@@ -101,7 +75,7 @@ class IndiceList(APIView):
         return Response(serializer.data)
 
     def put(self, request):
-        for index in range(0,350):
+        for index in range(0,35):
             indice = get_object_or_404(Indice, id=index)
 
             id = request.data.getlist('id')
@@ -109,13 +83,13 @@ class IndiceList(APIView):
             ticker = request.data.getlist('name')
             t = ticker[index]
             price = request.data.getlist('price')
-            p = float(price[index])
+            p = price[index]
             change = request.data.getlist('change')
-            c = float(change[index])
+            c = change[index]
             percentChange = request.data.getlist('percentChange')
             pc = percentChange[index]
 
-            serializer = StockSerializer(instance=indice, data={'id': i, 'name': t, 'price': p, 'change': c, 'percentChange': pc}, many=False)
+            serializer = IndiceSerializer(instance=indice, data={'id': i, 'name': t, 'price': p, 'change': c, 'percentChange': pc}, many=False, partial=True)
             if serializer.is_valid():
                 serializer.save()
 
@@ -128,11 +102,11 @@ class IndiceList(APIView):
             ticker = request.data.getlist('name')
             t = ticker[index]
             price = request.data.getlist('price')
-            p = float(price[index])
+            p = price[index]
             change = request.data.getlist('change')
-            c = float(change[index])
+            c = change[index]
             percentChange = request.data.getlist('percentChange')
-            pc = float(percentChange[index])
+            pc = percentChange[index]
 
             serializer = IndiceSerializer(data={'id': i, 'name': t, 'price': p, 'change': c, 'percentChange': pc}, many=False)
             if serializer.is_valid():

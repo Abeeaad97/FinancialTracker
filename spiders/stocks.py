@@ -3,21 +3,14 @@ import sys
 from bs4 import BeautifulSoup
 import csv
 import pandas as pd
-import requests
-import schedule
 import time
+import json
 
 API_ENDPOINT = "http://localhost:8000/stocks/"
 API_KEY = "b*8p4e%!rk#hzm04$@j@6ie54&*wg+cpmmua0f_-(h4k(qpq0!"
-METHOD = "POST"
+METHOD = "PUT"
 
-# Data Table
-ids=[]
-names=[]
-prices=[]
-changes=[]
-volumes=[]
-
+stocks = []
 index = 0
 url_index = 0
 
@@ -33,33 +26,28 @@ while True:
     soup = BeautifulSoup(data, 'lxml')
 
     for listing in soup.find_all('tr', attrs={'class':'simpTblRow'}):
+        listing_dict = {}
+        listing_dict["id"] = index
         for name in listing.find_all('td', attrs={'aria-label':'Name'}):
-            names.append(name.text)
+            listing_dict["name"] = name.text
         for price in listing.find_all('td', attrs={'aria-label':'Price (Intraday)'}):
-            prices.append(price.text.replace(',', ''))
+            listing_dict["price"] = price.text.replace(',', '')
         for change in listing.find_all('td', attrs={'aria-label':'Change'}):
-            changes.append(change.text)
+            listing_dict["change"] = change.text.replace(',', '')
         for volume in listing.find_all('td', attrs={'aria-label':'Volume'}):
-            volumes.append(volume.text)
-        ids.append(index)
+            listing_dict["volume"] = volume.text
         index += 1
 
-    stocks = {
-        "id": ids,
-        "ticker": names,
-        "price": prices,
-        "change": changes,
-        "volume": volumes
-    }
+        stocks.append(listing_dict)
 
-    if url_index != 400:
+    if url_index != 300:
         url_index += 100
     else:
         if METHOD == "POST":
-            requests.post(url=API_ENDPOINT, data=stocks)
+            requests.post(url=API_ENDPOINT, json=json.dumps(stocks))
             sys.exit()
 
-        requests.put(url=API_ENDPOINT, data=stocks)
+        requests.put(url=API_ENDPOINT, json=json.dumps(stocks))
         url_index = 0
-        index = 0
+        index = 1
         time.sleep(60)

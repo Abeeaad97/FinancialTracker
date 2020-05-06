@@ -2,10 +2,6 @@ from rest_framework import serializers
 from .models import *
 
 class CryptoSerializer(serializers.ModelSerializer):
-    def __init__(self, *args, **kwargs):
-        many = kwargs.pop('many', True)
-        super(CryptoSerializer, self).__init__(many=many, *args, **kwargs)
-
     class Meta:
         model = Crypto
         fields = ('id', 'name', 'price', 'change', 'percentChange')
@@ -17,7 +13,7 @@ class CryptoSerializer(serializers.ModelSerializer):
         instance.name = validated_data.get('name', instance.name)
         instance.price = validated_data.get('price', instance.price)
         instance.change = validated_data.get('change', instance.change)
-        instance.volume = validated_data.get('percentChange', instance.volume)
+        instance.percentChange = validated_data.get('percentChange', instance.percentChange)
 
         instance.save()
         return instance
@@ -50,10 +46,10 @@ class IndiceSerializer(serializers.ModelSerializer):
         return Indice.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.ticker = validated_data.get('name', instance.ticker)
+        instance.name = validated_data.get('name', instance.name)
         instance.price = validated_data.get('price', instance.price)
         instance.change = validated_data.get('change', instance.change)
-        instance.volume = validated_data.get('percentChange', instance.volume)
+        instance.percentChange = validated_data.get('percentChange', instance.percentChange)
 
         instance.save()
         return instance
