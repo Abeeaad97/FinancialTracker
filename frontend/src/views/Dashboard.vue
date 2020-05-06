@@ -12,6 +12,7 @@
       <v-tooltip top>
         <material-card
           color="green"
+          slot="activator"
           title="Top Stocks"
           text="Your Top Stocks"
         >
@@ -55,6 +56,7 @@
       <v-tooltip top>
         <material-card
           color="red"
+          slot="activator"
           title="Cryptocurrency"
           text="Current Crypto Values"
         >
