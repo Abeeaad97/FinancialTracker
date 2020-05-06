@@ -11,8 +11,10 @@
       <v-flex
         md12
       >
+      <v-tooltip left>
         <material-card
           color="green"
+          slot="activator"
           title="Stocks Table"
           text="Real-time exchange of most active stocks"
         >
@@ -43,6 +45,8 @@
             </template>
           </v-data-table>
         </material-card>
+        <span>This stock listing shows hourly changes of the most popularly traded stocks</span>
+        </v-tooltip>
       </v-flex>
 <!--      <v-flex
         md12
