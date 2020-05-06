@@ -7,6 +7,7 @@ export default [
   {
     path: '',
     // Relative to /src/views
+    name: 'Your Daily Finances',
     view: 'Dashboard'
   },
   {

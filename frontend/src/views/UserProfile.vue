@@ -34,6 +34,7 @@
                   <v-text-field
                     class="purple-input"
                     label="User Name"
+                    value="abidb"
                   />
                 </v-flex>
                 <v-flex
@@ -42,7 +43,10 @@
                 >
                   <v-text-field
                     label="Email Address"
-                    class="purple-input"/>
+                    class="purple-input"
+                    value="abidbakhtiyar@gmail.com"
+                    />
+                    
                 </v-flex>
                 <v-flex
                   xs12
@@ -50,7 +54,9 @@
                 >
                   <v-text-field
                     label="First Name"
-                    class="purple-input"/>
+                    class="purple-input"
+                    value="Abid"
+                    />
                 </v-flex>
                 <v-flex
                   xs12
@@ -58,7 +64,9 @@
                 >
                   <v-text-field
                     label="Last Name"
-                    class="purple-input"/>
+                    class="purple-input"
+                    value="Bakhtiyar"
+                    />
                 </v-flex>
                 <v-flex
                   xs12
@@ -66,21 +74,27 @@
                 >
                   <v-text-field
                     label="Adress"
-                    class="purple-input"/>
+                    class="purple-input"
+                    value="10032 Burgundy Place"
+                    />
                 </v-flex>
                 <v-flex
                   xs12
                   md4>
                   <v-text-field
                     label="City"
-                    class="purple-input"/>
+                    class="purple-input"
+                    value="Anaheim"
+                    />
                 </v-flex>
                 <v-flex
                   xs12
                   md4>
                   <v-text-field
                     label="Country"
-                    class="purple-input"/>
+                    class="purple-input"
+                    value="United States of America"
+                    />
                 </v-flex>
                 <v-flex
                   xs12
@@ -88,7 +102,9 @@
                   <v-text-field
                     class="purple-input"
                     label="Postal Code"
-                    type="number"/>
+                    type="number"
+                    value="92804"
+                    />
                 </v-flex>
                 <v-flex xs12>
                   <v-textarea

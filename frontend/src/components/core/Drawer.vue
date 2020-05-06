@@ -92,7 +92,7 @@ export default {
       },
       {
         to: '/indices-list',
-        icon: 'mdi-library',
+        icon: 'mdi-earth',
         text: 'Indices List'
       },
       {
@@ -102,8 +102,8 @@ export default {
       },
       {
         to: '/notifications',
-        icon: 'mdi-bell',
-        text: 'Notifications'
+        icon: 'mdi-information',
+        text: 'Information'
       }
     ]
   }),

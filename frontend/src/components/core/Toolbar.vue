@@ -55,15 +55,8 @@
             class="toolbar-items"
             to="/notifications"
           >
-            <v-badge
-              color="error"
-              overlap
-            >
-              <template slot="badge">
-                {{ notifications.length }}
-              </template>
-              <v-icon color="tertiary">mdi-bell</v-icon>
-            </v-badge>
+          <v-icon color="tertiary">mdi-information</v-icon>
+           
           </router-link>
           <v-card>
             <v-list dense>
@@ -100,11 +93,6 @@ import {
 export default {
   data: () => ({
     notifications: [
-      'Mike, John responded to your email',
-      'You have 5 new tasks',
-      'You\'re now a friend with Andrew',
-      'Another Notification',
-      'Another One'
     ],
     title: null,
     responsive: false
