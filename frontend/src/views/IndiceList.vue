@@ -11,8 +11,10 @@
       <v-flex
         md12
       >
+      <v-tooltip-left>
         <material-card
           color="green"
+          slot="activator"
           title="Indices Table"
           text="Real-time exchange status of world indices"
         >
@@ -43,6 +45,8 @@
             </template>
           </v-data-table>
         </material-card>
+        <span>This listing shows hourly changes of the most widely followed market indexes</span>
+        </v-tooltip>
       </v-flex>
 <!--      <v-flex
         md12
