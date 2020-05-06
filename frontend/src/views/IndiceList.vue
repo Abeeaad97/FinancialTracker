@@ -16,9 +16,11 @@
           title="Indices Table"
           text="Real-time exchange status of world indices"
         >
+        <v-text-field label="Search" v-model="search"></v-text-field>
           <v-data-table
             :headers="headers"
             :items="items"
+            :search="search"
             hide-actions
           >
             <template
@@ -93,6 +95,7 @@ export default {
     console.log('Mounted Got Here')
   },
   data: () => ({
+    search: '',
     headers: [
       {
         sortable: false,
@@ -100,17 +103,17 @@ export default {
         value: 'name'
       },
       {
-        sortable: false,
+        sortable: true,
         text: 'Price',
         value: 'price'
       },
       {
-        sortable: false,
+        sortable: true,
         text: 'Change',
         value: 'change'
       },
       {
-        sortable: false,
+        sortable: true,
         text: 'Percent Change',
         value: 'percentChange',
         align: 'right'

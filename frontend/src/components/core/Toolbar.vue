@@ -56,7 +56,7 @@
             to="/notifications"
           >
           <v-icon color="tertiary">mdi-information</v-icon>
-           
+
           </router-link>
           <v-card>
             <v-list dense>
