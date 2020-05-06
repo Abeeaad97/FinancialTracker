@@ -11,7 +11,7 @@
       <v-flex
         md12
       >
-      <v-tooltip-left>
+      <v-tooltip left>
         <material-card
           color="green"
           slot="activator"
