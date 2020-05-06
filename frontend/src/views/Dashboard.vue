@@ -47,7 +47,7 @@
           </v-data-table>
         </material-card>
         <span>5 most active stocks immediately shown</span>
-        </v-tooltip>
+       </v-tooltip>
       </v-flex>
       <v-flex
         md12
@@ -91,7 +91,7 @@
           </v-data-table>
         </material-card>
         <span>5 most active cryptocurrencies immediately shown</span>
-        </v-tooltip>
+       </v-tooltip>
       </v-flex>
       <v-flex
         sm6
