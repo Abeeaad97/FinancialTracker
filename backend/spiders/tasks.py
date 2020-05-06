@@ -1,14 +1,10 @@
 import requests
-import sys
 from bs4 import BeautifulSoup
 from celery import Celery
-import csv
 import pandas as pd
-import time
 import json
 
-app = Celery('tasks', broker='amqp://tyler:admin@localhost:5672/myvhost')
-
+app = Celery('tasks')
 
 
 @app.task
