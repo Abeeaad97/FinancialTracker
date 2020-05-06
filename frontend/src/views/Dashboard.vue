@@ -57,6 +57,12 @@
           <v-data-table
             :headers="cryptoHeaders"
             :items="cryptoItems"
+            :items-per-page="5"
+            item-key="name"
+            class="elevation-1"
+            :footer-props="{
+              showFirstLastPage: true,
+            }"
           >
             <template
               slot="headerCell"
@@ -68,7 +74,7 @@
               />
             </template>
             <template
-              slot="cryptoItems"
+              slot="items"
               slot-scope="{ index, item }"
             >
               <td>{{ item.name }}</td>
@@ -214,7 +220,38 @@ export default {
           align: 'right'
         }
       ],
-      cryptoItems: [],
+      cryptoItems:[
+        {
+          name: "Bitcoin USD",
+          price: "9037.66",
+          change: "+38.54",
+          percentChange: "+0.43%"
+        },
+        {
+            name: "Ethereum USD",
+            price: "209.59",
+            change: "+2.90",
+            percentChange: "+1.40%"
+        },
+        {
+            name: "XRP USD",
+            price: "0.2201",
+            change: "+0.0037",
+            percentChange: "+1.69%"
+        },
+        {
+            name: "Tether USD",
+            price: "1.0043",
+            change: "+0.0030",
+            percentChange: "+0.30%"
+        },
+        {
+            name: "Bitcoin Cash USD",
+            price: "249.44",
+            change: "+4.79",
+            percentChange: "+1.96%"
+        },
+      ],
       headers: [
         {
           sortable: false,
@@ -283,8 +320,6 @@ export default {
        
       console.log(response.data)
       self.items = response.data
-
-      
     })
     .catch(error => {
       console.log(error)
